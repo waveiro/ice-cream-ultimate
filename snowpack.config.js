@@ -12,12 +12,8 @@ module.exports = {
     '@snowpack/plugin-react-refresh',
     '@snowpack/plugin-dotenv'],
   routes: [
-    {
-      src: '/api/.*',
-      dest: (req, res) => {
-        proxy.web(req, res);
-      },
-    },
+    { match: 'all', src: '/api/.*', dest: (req, res) => proxy.web(req, res) },
+    { match: 'routes', src: '.*', dest: '/index.html' },
   ],
   optimize: {
     /* Example: Bundle your final build: */

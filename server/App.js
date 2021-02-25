@@ -1,8 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const delay = require('express-delay');
 const app = express();
 app.use(bodyParser.json());
 const port = 5000;
+
+// app.use(delay(3000));
 
 const iceCreams = [
   { id: 0, name: 'Stripey Madness' },
@@ -19,7 +22,7 @@ const iceCreams = [
   { id: 11, name: 'Choco Mirror Ball' },
   { id: 12, name: 'Hearty Treat' },
   { id: 13, name: 'Strawberry Valentine' },
-  { id: 14, name: "Stick 'o Lime" },
+  { id: 14, name: 'Stick \'o Lime' },
   { id: 15, name: 'Catastrophe' },
   { id: 16, name: 'Purple People Eater' },
   { id: 17, name: 'Strawberry Pine Tree' },
@@ -33,7 +36,7 @@ const iceCreams = [
   { id: 25, name: 'Powerball' },
   { id: 26, name: 'Shaken and Whipped' },
   { id: 27, name: 'Sundae Everyday' },
-  { id: 28, name: 'Toxic Sludge' },
+  { id: 28, name: 'Toxic Sludge' }
 ];
 
 let menuData = [
@@ -44,7 +47,7 @@ let menuData = [
     quantity: 20,
     price: 1.51,
     description:
-      'Blast your taste buds into fruity space with this vanilla and cherry bomb',
+      'Blast your taste buds into fruity space with this vanilla and cherry bomb'
   },
   {
     id: 2,
@@ -52,7 +55,7 @@ let menuData = [
     inStock: true,
     quantity: 30,
     price: 1.64,
-    description: 'A feline strawberry cranium, what could possibly go wrong?',
+    description: 'A feline strawberry cranium, what could possibly go wrong?'
   },
   {
     id: 3,
@@ -60,7 +63,7 @@ let menuData = [
     inStock: true,
     quantity: 30,
     price: 1.5,
-    description: "You'll lose your head over this inverted whisky-vanilla cone",
+    description: 'You\'ll lose your head over this inverted whisky-vanilla cone'
   },
   {
     id: 4,
@@ -68,7 +71,7 @@ let menuData = [
     inStock: true,
     quantity: 10,
     price: 1.82,
-    description: 'A zing of lime straight from Area 51',
+    description: 'A zing of lime straight from Area 51'
   },
   {
     id: 5,
@@ -76,7 +79,7 @@ let menuData = [
     inStock: false,
     quantity: 0,
     price: 2.98,
-    description: 'Hazelnut and vanilla, chocolate and cherries',
+    description: 'Hazelnut and vanilla, chocolate and cherries'
   },
   {
     id: 6,
@@ -84,7 +87,7 @@ let menuData = [
     inStock: true,
     quantity: 50,
     price: 2.19,
-    description: 'A floating stronghold of vanilla, chocolate and pistachio',
+    description: 'A floating stronghold of vanilla, chocolate and pistachio'
   },
   {
     id: 7,
@@ -92,8 +95,8 @@ let menuData = [
     inStock: true,
     quantity: 20,
     price: 1.29,
-    description: 'Chocolate electricity on a motherboard of raspberry',
-  },
+    description: 'Chocolate electricity on a motherboard of raspberry'
+  }
 ];
 
 const getAvailableStock = () =>
@@ -124,13 +127,13 @@ app.get('/api/menu', (req, res) => {
 });
 
 app.post('/api/menu', (req, res) => {
-  const {  iceCream, ...rest } = req.body;
+  const { iceCream, ...rest } = req.body;
   const newMenuItem = {
     id: menuData.reduce((prev, cur) => (cur.id > prev ? cur.id : prev), 0) + 1,
     iceCream: {
-      ...iceCreams.find(item => item.id === parseInt(iceCream.id, 10)),
+      ...iceCreams.find(item => item.id === parseInt(iceCream.id, 10))
     },
-    ...rest,
+    ...rest
   };
   menuData.push(newMenuItem);
 
@@ -157,9 +160,9 @@ app.put('/api/menu/:id', (req, res) => {
   const updatedItem = {
     id: intId,
     iceCream: {
-      ...iceCreams.find(item => item.id === parseInt(iceCream.id, 10)),
+      ...iceCreams.find(item => item.id === parseInt(iceCream.id, 10))
     },
-    ...rest,
+    ...rest
   };
   menuData = menuData.map(menuItem => {
     if (menuItem.id === parseInt(req.params.id, 10)) {
